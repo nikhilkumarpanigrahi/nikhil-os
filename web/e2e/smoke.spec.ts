@@ -77,3 +77,13 @@ test("profile apps render knowledge data", async ({ page }) => {
     "An AI-native personal computing environment",
   );
 });
+
+test("resume app renders experience and education", async ({ page }) => {
+  const nav = await enterOs(page);
+  await openApp(nav, "Resume");
+
+  const resumeWin = page.locator('.os-window[aria-label="Resume"]');
+  await expect(resumeWin).toContainText("WhatBytes");
+  await expect(resumeWin).toContainText("Infosys Springboard");
+  await expect(resumeWin).toContainText("KL University");
+});

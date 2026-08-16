@@ -1,35 +1,53 @@
 {
   "person": {
     "name": "Nikhil Kumar Panigrahi",
-    "role": "Full-Stack & Systems-Oriented Engineer",
+    "role": "Full-Stack & AI/ML Engineer",
     "location": "India",
-    "summary": "Engineer building NIKHIL//OS — an AI-native personal computing environment — with Rust, WebAssembly, React, and real operating-system internals. Interested in systems programming, AI/ML, and developer tooling.",
+    "summary": "Backend and AI/ML engineer building NIKHIL//OS — an AI-native personal computing environment — with Rust, WebAssembly, React, and real operating-system internals. Focused on Django/FastAPI backends, RAG and vector search, and developer tooling.",
     "contact": {
-      "email": "REPLACE-WITH-EMAIL",
+      "email": "",
       "github": "nikhilkumarpanigrahi",
-      "linkedin": "REPLACE-WITH-LINKEDIN",
-      "website": "REPLACE-WITH-WEBSITE"
+      "linkedin": "",
+      "website": ""
     }
   },
   "highlights": [
-    "Systems programming in Rust",
-    "AI-native product engineering",
-    "Full-stack development",
-    "Open-source"
+    "Backend engineering — Django / DRF, FastAPI, Flask",
+    "AI / ML — RAG, embeddings, vector search",
+    "Full-stack — React + REST APIs",
+    "Open-source contributor"
   ],
   "skills": [
-    { "name": "Rust", "category": "Systems", "level": 80 },
-    { "name": "WebAssembly", "category": "Systems", "level": 70 },
-    { "name": "TypeScript", "category": "Frontend", "level": 85 },
-    { "name": "React", "category": "Frontend", "level": 80 },
-    { "name": "Node.js", "category": "Backend", "level": 75 },
-    { "name": "Python", "category": "Backend", "level": 70 },
-    { "name": "SQL", "category": "Data", "level": 65 },
-    { "name": "Git", "category": "Tooling", "level": 85 }
+    { "name": "Django / DRF", "category": "Backend", "level": 80 },
+    { "name": "FastAPI", "category": "Backend", "level": 75 },
+    { "name": "Flask", "category": "Backend", "level": 70 },
+    { "name": "REST APIs", "category": "Backend", "level": 85 },
+    { "name": "JWT", "category": "Backend", "level": 75 },
+    { "name": "RBAC", "category": "Backend", "level": 70 },
+    { "name": "PostgreSQL", "category": "Data", "level": 75 },
+    { "name": "MongoDB", "category": "Data", "level": 75 },
+    { "name": "Atlas Vector Search", "category": "Data", "level": 70 },
+    { "name": "RAG", "category": "AI/ML", "level": 75 },
+    { "name": "Embeddings", "category": "AI/ML", "level": 70 },
+    { "name": "Vector Search", "category": "AI/ML", "level": 75 },
+    { "name": "NLP", "category": "AI/ML", "level": 65 },
+    { "name": "Scikit-learn", "category": "AI/ML", "level": 65 },
+    { "name": "OCR", "category": "AI/ML", "level": 60 },
+    { "name": "ML Classification", "category": "AI/ML", "level": 65 },
+    { "name": "React.js", "category": "Frontend", "level": 70 },
+    { "name": "TypeScript", "category": "Frontend", "level": 65 },
+    { "name": "Rust", "category": "Systems", "level": 60 },
+    { "name": "WebAssembly", "category": "Systems", "level": 55 },
+    { "name": "Git", "category": "Tooling", "level": 85 },
+    { "name": "GitHub", "category": "Tooling", "level": 85 },
+    { "name": "Docker", "category": "Tooling", "level": 65 }
   ],
   "technologies": [
-    "Rust", "WebAssembly", "TypeScript", "React", "Vite", "Node.js",
-    "Python", "PostgreSQL", "Git", "Linux", "Docker"
+    "Django", "DRF", "FastAPI", "Flask", "REST", "JWT", "RBAC",
+    "PostgreSQL", "MongoDB", "Atlas Vector Search",
+    "RAG", "Embeddings", "Vector Search", "NLP", "Scikit-learn", "OCR",
+    "React", "TypeScript", "Rust", "WebAssembly",
+    "Git", "GitHub", "Docker"
   ],
   "projects": [
     {
@@ -54,60 +72,83 @@
       ]
     },
     {
-      "id": "your-project-1",
-      "title": "Your Project (placeholder)",
-      "category": "backend",
-      "summary": "REPLACE — describe a project you've built.",
-      "description": "REPLACE — add a longer description. What problem did it solve, what did you learn, what are the notable implementation details?",
-      "architecture": "REPLACE — one or two sentences on the architecture.",
-      "technologies": ["Node.js", "PostgreSQL"],
-      "highlights": ["REPLACE — a concrete, verifiable bullet"],
+      "id": "companymind",
+      "title": "CompanyMind",
+      "category": "ai-ml",
+      "summary": "An AI/ML project applying RAG and vector search to company intelligence.",
+      "description": "Built with the AI/ML stack from the resume — RAG pipelines, embeddings, and MongoDB Atlas Vector Search. Featured work tied to the MongoDB Smart Bridge Hack N Go run.",
+      "architecture": "RAG pipeline over a vector store, with document ingestion and retrieval.",
+      "technologies": ["MongoDB", "Atlas Vector Search", "RAG", "Embeddings", "Python"],
+      "highlights": [
+        "RAG + embeddings pipeline over a vector database",
+        "Recognized at MongoDB Smart Bridge Hack N Go (2nd Runner-Up)"
+      ],
       "repo": "",
       "demo": "",
       "evidence": [
-        { "title": "REPLACE — evidence title (link, repo, live demo)", "url": "" }
+        { "title": "MongoDB Smart Bridge Hack N Go — 2nd Runner-Up", "url": "" }
       ]
     },
     {
-      "id": "your-project-2",
-      "title": "Your Project (placeholder)",
-      "category": "open-source",
-      "summary": "REPLACE — an open-source contribution or project.",
-      "description": "REPLACE — link to the contribution, PR, or repo. What did you change or build?",
-      "architecture": "REPLACE",
-      "technologies": ["TypeScript", "React"],
-      "highlights": ["REPLACE"],
+      "id": "assistly",
+      "title": "ASSISTLY",
+      "category": "ai-ml",
+      "summary": "An AI assistant project built on retrieval-augmented generation.",
+      "description": "A RAG-based assistant, pairing a Django/FastAPI backend with embeddings and vector search to answer from a knowledge base.",
+      "architecture": "Backend API (Django/FastAPI) + retrieval layer over vector embeddings.",
+      "technologies": ["Django", "FastAPI", "RAG", "Vector Search", "Python"],
+      "highlights": [
+        "Retrieval-augmented assistant over a knowledge base",
+        "Backend API with REST + JWT"
+      ],
       "repo": "",
       "demo": "",
-      "evidence": [
-        { "title": "REPLACE", "url": "" }
-      ]
+      "evidence": []
     }
   ],
   "experience": [
     {
-      "role": "REPLACE — Role",
-      "organization": "REPLACE — Organization",
-      "period": "REPLACE — e.g. Jun 2025 – Present",
-      "summary": "REPLACE — what you did.",
-      "highlights": ["REPLACE — a measurable outcome"]
+      "role": "Backend Developer Intern",
+      "organization": "WhatBytes",
+      "period": "",
+      "summary": "Backend development internship building REST APIs on the Django / Django REST Framework stack.",
+      "highlights": [
+        "REST API development with Django / DRF",
+        "Authentication with JWT and role-based access control"
+      ]
+    },
+    {
+      "role": "AI/ML Virtual Intern",
+      "organization": "Infosys Springboard",
+      "period": "",
+      "summary": "AI/ML virtual internship covering retrieval-augmented generation, embeddings, vector search, NLP, and ML classification.",
+      "highlights": [
+        "RAG, embeddings, and vector search",
+        "NLP and ML classification with Scikit-learn"
+      ]
     }
   ],
   "education": [
     {
-      "degree": "REPLACE — Degree",
-      "institution": "REPLACE — Institution",
-      "period": "REPLACE — Year"
+      "degree": "B.Tech in Computer Science and Engineering",
+      "institution": "KL University, Hyderabad",
+      "period": "CGPA 9.7"
     }
   ],
   "certifications": [
-    { "name": "REPLACE", "issuer": "REPLACE", "year": "REPLACE" }
+    { "name": "MongoDB Associate Developer", "issuer": "MongoDB", "year": "" },
+    { "name": "AI/ML Internship Certificate", "issuer": "Infosys Springboard", "year": "" }
   ],
   "achievements": [
-    { "title": "REPLACE", "description": "REPLACE", "evidence": [] }
+    {
+      "title": "2nd Runner-Up — MongoDB Smart Bridge Hack N Go",
+      "description": "Placed 2nd runner-up in the MongoDB Smart Bridge Hack N Go hackathon.",
+      "evidence": []
+    }
   ],
   "contributions": [
-    { "repo": "REPLACE", "description": "REPLACE" }
+    { "repo": "Oppia Android", "description": "Contributor to the Oppia Android CLAM team — 4 merged PRs." },
+    { "repo": "freeCodeCamp", "description": "Contributed PR #63866." }
   ],
   "claims": [
     {
