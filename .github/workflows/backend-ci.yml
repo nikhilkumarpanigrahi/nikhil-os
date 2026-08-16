@@ -56,5 +56,9 @@ jobs:
       - name: Tests (real Postgres service container)
         run: cargo test
 
+      # Context is the repo root (not backend/): the image embeds the canonical
+      # knowledge/data/profile.json from one level up, so the context must
+      # include it. The default working-directory is backend/; override to root.
       - name: Docker image builds (offline sqlx, musl static)
-        run: docker build -t nikhil-os-backend:ci .
+        working-directory: "${{ github.workspace }}"
+        run: docker build -f backend/Dockerfile -t nikhil-os-backend:ci .

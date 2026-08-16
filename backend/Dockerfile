@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 #
-# Multi-stage build.
+# Multi-stage build. Build context is the REPO ROOT (docker build -f
+# backend/Dockerfile .), not backend/ — the binary embeds
+# knowledge/data/profile.json (include_str!) which lives at the repo root and
+# is shared with the WASM core. COPY paths below are root-relative.
 #
 # Builder: rust:1.97-alpine (musl static link). ring/rustls (sqlx + reqwest TLS)
 # need a C toolchain, so install gcc + musl-dev. The Alpine rust image targets
@@ -20,14 +23,14 @@ ARG LTO=thin
 WORKDIR /app
 RUN apk add --no-cache musl-dev gcc
 # Offline query cache: the build must never touch a live database.
-COPY .cargo ./.cargo
-COPY Cargo.toml Cargo.lock ./
-COPY migrations ./migrations
-COPY .sqlx ./.sqlx
-COPY src ./src
+COPY backend/.cargo ./.cargo
+COPY backend/Cargo.toml backend/Cargo.lock ./
+COPY backend/migrations ./migrations
+COPY backend/.sqlx ./.sqlx
+COPY backend/src ./src
 # knowledge.rs embeds ../../knowledge/data/profile.json (include_str!) — the
-# canonical profile data, one source shared with the WASM core. It must be in
-# the builder or `cargo build` fails at compile time.
+# canonical profile data, one source shared with the WASM core. Lives at the
+# repo root, hence the root-level build context.
 COPY knowledge ./knowledge
 ENV SQLX_OFFLINE=true
 # The --config value must be a quoted TOML string — `profile.release.lto=thin`

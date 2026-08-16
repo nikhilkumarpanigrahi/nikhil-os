@@ -37,7 +37,10 @@ services:
 
   api:
     build:
-      context: .
+      # Context is the repo root (not .): the image embeds the canonical
+      # knowledge/data/profile.json, which lives one level up from backend/.
+      context: ..
+      dockerfile: backend/Dockerfile
       # LTO off = the image builds comfortably on a 1 GB free-tier box.
       args:
         LTO: "off"

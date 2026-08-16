@@ -1,0 +1,16 @@
+# Build context for backend/Dockerfile is the REPO ROOT (not backend/), because
+# the API embeds knowledge/data/profile.json (include_str!) — the canonical
+# profile data shared with the WASM core. Keep the context small: only backend
+# sources, backend/.sqlx, and knowledge/ are actually copied into the image.
+**/.git
+**/target
+**/.env
+**/node_modules
+**/dist
+web
+crates
+docs
+scripts
+.github
+backend/tests
+*.md
