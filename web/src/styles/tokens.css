@@ -1,25 +1,44 @@
-/* NIKHIL//OS design tokens — dark-first, from the design system document. */
+/* NIKHIL//OS design tokens — Aurora Glass.
+ *
+ * Deep navy-black base, animated aurora backdrop, frosted-glass surfaces and a
+ * violet→cyan→pink accent system. Everything is a token so the whole OS can be
+ * re-skinned by swapping this file (the system bar has a theme switcher that
+ * does exactly that via `data-theme` on <html>).
+ */
+
 :root {
-  /* surfaces */
-  --bg: #08090a;
-  --surface: #0e1012;
-  --elevated: #15181c;
-  --border: #24282d;
-  --border-strong: #33383f;
+  /* base surfaces */
+  --bg: #070b16;
+  --surface: rgba(148, 166, 219, 0.055);
+  --surface-solid: #0d1226;
+  --elevated: rgba(148, 166, 219, 0.09);
+  --border: rgba(160, 178, 232, 0.14);
+  --border-strong: rgba(160, 178, 232, 0.26);
+
+  /* frosted glass for windows / bars */
+  --glass: rgba(12, 17, 36, 0.72);
+  --glass-strong: rgba(9, 13, 28, 0.86);
 
   /* text */
-  --text: #f5f7fa;
-  --text-secondary: #8b929c;
-  --text-muted: #5b626b;
+  --text: #eef1ff;
+  --text-secondary: #a5afd2;
+  --text-muted: #68739e;
 
-  /* accent — one signature accent used sparingly */
-  --accent: #5eead4;
-  --accent-dim: rgba(94, 234, 212, 0.12);
+  /* accent system — violet / cyan / pink */
+  --accent: #9d8bff;
+  --accent-2: #38d4f0;
+  --accent-3: #f478c8;
+  --accent-dim: rgba(157, 139, 255, 0.13);
 
   /* semantic */
-  --ok: #4ade80;
-  --warn: #fbbf24;
-  --err: #f87171;
+  --ok: #3ddc97;
+  --warn: #ffc24b;
+  --err: #ff6b6b;
+
+  /* gradients */
+  --grad-brand: linear-gradient(115deg, #a493ff 0%, #38d4f0 55%, #f478c8 100%);
+  --grad-accent: linear-gradient(115deg, var(--accent) 0%, var(--accent-2) 100%);
+  --grad-text: linear-gradient(115deg, #c9beff 0%, #7fe8ff 50%, #ffa5dd 100%);
 
   /* status of the simulated machine */
   --proc-new: var(--text-muted);
@@ -29,17 +48,91 @@
   --proc-terminated: var(--err);
 
   /* type */
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   /* metrics */
-  --sysbar-h: 40px;
-  --sidebar-w: 220px;
-  --radius: 10px;
-  --radius-sm: 6px;
+  --sysbar-h: 44px;
+  --sidebar-w: 224px;
+  --radius: 14px;
+  --radius-sm: 8px;
 
   --shadow-window:
-    0 0 0 1px rgba(0, 0, 0, 0.4), 0 18px 48px rgba(0, 0, 0, 0.55);
+    0 0 0 1px rgba(148, 168, 255, 0.14),
+    0 26px 64px rgba(0, 0, 0, 0.55),
+    0 0 42px rgba(122, 102, 255, 0.1);
+  --shadow-glow: 0 0 24px rgba(157, 139, 255, 0.35);
 
-  --transition-fast: 120ms ease;
+  --transition-fast: 140ms ease;
+}
+
+/* Aurora Glass theme (default) ---------------------------------------------- */
+:root[data-theme="aurora"],
+:root:not([data-theme]) {
+  --bg: #070b16;
+  --surface: rgba(148, 166, 219, 0.055);
+  --surface-solid: #0d1226;
+  --elevated: rgba(148, 166, 219, 0.09);
+  --border: rgba(160, 178, 232, 0.14);
+  --border-strong: rgba(160, 178, 232, 0.26);
+  --glass: rgba(12, 17, 36, 0.72);
+  --glass-strong: rgba(9, 13, 28, 0.86);
+  --text: #eef1ff;
+  --text-secondary: #a5afd2;
+  --text-muted: #68739e;
+  --accent: #9d8bff;
+  --accent-2: #38d4f0;
+  --accent-3: #f478c8;
+  --accent-dim: rgba(157, 139, 255, 0.13);
+  --grad-brand: linear-gradient(115deg, #a493ff 0%, #38d4f0 55%, #f478c8 100%);
+  --grad-accent: linear-gradient(115deg, var(--accent) 0%, var(--accent-2) 100%);
+  --grad-text: linear-gradient(115deg, #c9beff 0%, #7fe8ff 50%, #ffa5dd 100%);
+  --shadow-glow: 0 0 24px rgba(157, 139, 255, 0.35);
+}
+
+/* Cyberpunk Terminal theme -------------------------------------------------- */
+:root[data-theme="terminal"] {
+  --bg: #06070a;
+  --surface: rgba(34, 255, 136, 0.04);
+  --surface-solid: #0a0f0c;
+  --elevated: rgba(34, 255, 136, 0.07);
+  --border: rgba(34, 255, 136, 0.18);
+  --border-strong: rgba(34, 255, 136, 0.34);
+  --glass: rgba(4, 8, 6, 0.78);
+  --glass-strong: rgba(2, 5, 3, 0.9);
+  --text: #d6ffea;
+  --text-secondary: #8fd4b4;
+  --text-muted: #4f7a68;
+  --accent: #22ff88;
+  --accent-2: #2ee6ff;
+  --accent-3: #ff2ec4;
+  --accent-dim: rgba(34, 255, 136, 0.12);
+  --grad-brand: linear-gradient(115deg, #22ff88 0%, #2ee6ff 100%);
+  --grad-accent: linear-gradient(115deg, #22ff88 0%, #2ee6ff 100%);
+  --grad-text: linear-gradient(115deg, #22ff88 0%, #2ee6ff 100%);
+  --shadow-glow: 0 0 20px rgba(34, 255, 136, 0.3);
+}
+
+/* Noir Luxe theme ----------------------------------------------------------- */
+:root[data-theme="noir"] {
+  --bg: #0a0a0b;
+  --surface: rgba(212, 175, 55, 0.045);
+  --surface-solid: #131313;
+  --elevated: rgba(212, 175, 55, 0.07);
+  --border: rgba(232, 205, 138, 0.14);
+  --border-strong: rgba(232, 205, 138, 0.26);
+  --glass: rgba(12, 12, 12, 0.74);
+  --glass-strong: rgba(9, 9, 9, 0.88);
+  --text: #f2eee3;
+  --text-secondary: #b8b09c;
+  --text-muted: #6f6a5e;
+  --accent: #d4af37;
+  --accent-2: #e8cd8a;
+  --accent-3: #c79a3b;
+  --accent-dim: rgba(212, 175, 55, 0.12);
+  --grad-brand: linear-gradient(115deg, #f0d27a 0%, #d4af37 60%, #a87f2a 100%);
+  --grad-accent: linear-gradient(115deg, #f0d27a 0%, #d4af37 100%);
+  --grad-text: linear-gradient(115deg, #f5e7bd 0%, #d4af37 100%);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.25);
 }

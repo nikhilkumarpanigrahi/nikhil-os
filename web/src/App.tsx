@@ -12,6 +12,17 @@ export default function App() {
   const { ready, getBootLog, version } = useCore();
   const [stage, setStage] = useState<Stage>("landing");
 
+  // Aurora backdrop: a fixed layer of blurred gradient blobs behind every
+  // screen. Rendered once here so landing, boot, and desktop all share it.
+  const aurora = (
+    <div className="aurora" aria-hidden>
+      <i className="b1" />
+      <i className="b2" />
+      <i className="b3" />
+      <i className="b4" />
+    </div>
+  );
+
   const enter = () => {
     if (ready) setStage("boot");
   };
@@ -21,10 +32,25 @@ export default function App() {
   };
 
   if (stage === "boot") {
-    return <BootScreen lines={getBootLog()} onDone={() => setStage("desktop")} />;
+    return (
+      <>
+        {aurora}
+        <BootScreen lines={getBootLog()} onDone={() => setStage("desktop")} />
+      </>
+    );
   }
   if (stage === "desktop") {
-    return <Desktop version={version} onPowerOff={powerOff} />;
+    return (
+      <>
+        {aurora}
+        <Desktop version={version} onPowerOff={powerOff} />
+      </>
+    );
   }
-  return <Landing onEnter={enter} repoUrl={REPO_URL} />;
+  return (
+    <>
+      {aurora}
+      <Landing onEnter={enter} repoUrl={REPO_URL} />
+    </>
+  );
 }

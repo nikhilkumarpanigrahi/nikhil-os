@@ -10,10 +10,7 @@
   text-align: center;
   padding: 24px;
   position: relative;
-  background:
-    radial-gradient(1000px 500px at 50% -10%, rgba(94, 234, 212, 0.07), transparent 60%),
-    radial-gradient(800px 500px at 50% 120%, rgba(245, 247, 250, 0.04), transparent 60%),
-    var(--bg);
+  isolation: isolate;
 }
 
 .landing::before {
@@ -21,83 +18,164 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(245, 247, 250, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 247, 250, 0.025) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 70%);
+    linear-gradient(rgba(180, 200, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 200, 255, 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 75% 62% at 50% 42%, #000 28%, transparent 72%);
   pointer-events: none;
+  z-index: -1;
 }
 
 .landing-inner {
   position: relative;
-  max-width: 760px;
+  max-width: 800px;
+  z-index: 1;
 }
 
 .landing .eyebrow {
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: var(--accent);
-  margin-bottom: 18px;
+  letter-spacing: 0.28em;
+  color: var(--accent-2);
+  margin-bottom: 20px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+}
+.landing .eyebrow .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 10px var(--ok);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+.landing .brand-glow {
+  position: relative;
+  display: inline-block;
+}
+.landing .brand-glow::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 120%;
+  height: 46%;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 100% at 50% 50%, rgba(157, 139, 255, 0.4), transparent 70%);
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .landing h1 {
-  font-size: clamp(44px, 9vw, 88px);
-  line-height: 0.98;
-  margin: 0 0 6px;
-  letter-spacing: -0.03em;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 10vw, 104px);
+  line-height: 0.96;
+  margin: 0;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .landing .slash {
-  color: var(--accent);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .landing .tagline {
   color: var(--text-secondary);
-  font-size: clamp(15px, 2.4vw, 19px);
-  margin: 16px auto 0;
-  max-width: 520px;
+  font-size: clamp(15px, 2.3vw, 18.5px);
+  margin: 18px auto 0;
+  max-width: 560px;
+  line-height: 1.55;
 }
 
 .landing .actions {
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 34px;
   flex-wrap: wrap;
 }
 .landing .actions .btn {
-  padding: 12px 22px;
+  padding: 13px 24px;
   font-size: 14px;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .landing .features {
-  display: flex;
-  gap: 26px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
   margin-top: 52px;
-  flex-wrap: wrap;
-  color: var(--text-muted);
-  font-size: 12.5px;
+  max-width: 640px;
+  width: 100%;
 }
 .landing .features span {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  color: var(--text-muted);
+  font-size: 11.5px;
+  text-align: left;
 }
 .landing .features b {
-  color: var(--text-secondary);
-  font-weight: 600;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.landing .term-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 34px;
+  letter-spacing: 0.02em;
+}
+.landing .term-line .prompt {
+  color: var(--ok);
+}
+.landing .term-line .out {
+  color: var(--accent-2);
 }
 
 .landing footer {
   position: absolute;
-  bottom: 18px;
+  bottom: 16px;
   left: 0;
   right: 0;
   font-size: 12px;
   color: var(--text-muted);
+  z-index: 1;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* Boot ---------------------------------------------------------------- */
@@ -107,7 +185,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg);
+  background: transparent;
   padding: 24px;
 }
 
@@ -115,12 +193,29 @@
   width: min(680px, 100%);
   font-family: var(--font-mono);
   font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--glass-strong);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-window);
+  padding: 22px 24px;
 }
 
 .boot-console .headline {
   color: var(--accent);
   margin-bottom: 18px;
-  font-size: 14px;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.boot-console .headline::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
 }
 
 .boot-line {

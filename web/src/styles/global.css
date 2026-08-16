@@ -65,7 +65,91 @@ code,
   background: transparent;
 }
 
-/* Reusable primitives -------------------------------------------------- */
+/* Aurora backdrop ---------------------------------------------------------
+   A fixed layer of slow-moving blurred gradient blobs behind everything.
+   `.aurora` is mounted once in App.tsx, below all screen content. */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+}
+.aurora::after {
+  /* subtle vertical nebula wash to anchor the blobs */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, transparent 40%, rgba(0, 0, 0, 0.28) 100%);
+}
+.aurora i {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.aurora .b1 {
+  width: 55vw;
+  height: 55vw;
+  left: -10vw;
+  top: -14vw;
+  background: radial-gradient(circle, #6b3dff 0%, rgba(107, 61, 255, 0) 68%);
+  animation: aurora-drift-a 26s ease-in-out infinite alternate;
+}
+.aurora .b2 {
+  width: 48vw;
+  height: 48vw;
+  right: -8vw;
+  top: 6vw;
+  background: radial-gradient(circle, #0fb9dd 0%, rgba(15, 185, 221, 0) 68%);
+  animation: aurora-drift-b 32s ease-in-out infinite alternate;
+}
+.aurora .b3 {
+  width: 42vw;
+  height: 42vw;
+  left: 22vw;
+  bottom: -18vw;
+  background: radial-gradient(circle, #e44fb6 0%, rgba(228, 79, 182, 0) 68%);
+  animation: aurora-drift-c 38s ease-in-out infinite alternate;
+}
+.aurora .b4 {
+  width: 34vw;
+  height: 34vw;
+  right: 16vw;
+  bottom: -12vw;
+  background: radial-gradient(circle, #3ddc97 0%, rgba(61, 220, 151, 0) 68%);
+  opacity: 0.35;
+  animation: aurora-drift-a 44s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes aurora-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(9vw, 7vh, 0) scale(1.15);
+  }
+}
+@keyframes aurora-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-8vw, 9vh, 0) scale(0.92);
+  }
+}
+@keyframes aurora-drift-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6vw, -8vh, 0) scale(1.18);
+  }
+}
+
+/* Reusable primitives ----------------------------------------------------- */
 
 .btn {
   appearance: none;
@@ -73,24 +157,33 @@ code,
   background: var(--elevated);
   color: var(--text);
   border-radius: var(--radius-sm);
-  padding: 8px 14px;
+  padding: 9px 16px;
   font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 .btn:hover {
   background: var(--border);
   border-color: var(--text-secondary);
+  transform: translateY(-1px);
 }
 .btn-primary {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-  font-weight: 600;
+  background: var(--grad-accent);
+  color: #06080f;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(56, 212, 240, 0.28);
 }
 .btn-primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  filter: brightness(1.08);
+  box-shadow: 0 8px 26px rgba(157, 139, 255, 0.4);
+  transform: translateY(-1px);
+}
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-strong);
 }
 
 .chip {
@@ -99,10 +192,12 @@ code,
   gap: 6px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 3px 10px;
+  padding: 3px 11px;
   font-size: 12px;
   color: var(--text-secondary);
   background: var(--surface);
+  backdrop-filter: blur(6px);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .chip.active {
@@ -116,6 +211,7 @@ code,
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
+  backdrop-filter: blur(10px);
 }
 
 .muted {
@@ -136,11 +232,20 @@ code,
 .err {
   color: var(--err);
 }
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+  .aurora i {
+    animation: none !important;
   }
 }

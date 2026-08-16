@@ -5,7 +5,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
 }
 
 .app-toolbar {
@@ -14,7 +14,8 @@
   gap: 10px;
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  background: rgba(148, 166, 219, 0.045);
+  backdrop-filter: blur(8px);
   flex: none;
 }
 
@@ -48,19 +49,19 @@
   font-weight: 500;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   padding: 6px 10px;
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: var(--bg);
+  background: var(--glass-strong);
 }
 .data-table td {
   padding: 5px 10px;
-  border-bottom: 1px solid rgba(36, 40, 45, 0.5);
+  border-bottom: 1px solid var(--border);
 }
 .data-table tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--elevated);
 }
 
 /* project cards */
@@ -80,7 +81,7 @@
 .bar > span {
   display: block;
   height: 100%;
-  background: var(--accent);
+  background: var(--grad-accent);
   border-radius: 3px;
 }
 
@@ -95,20 +96,21 @@
   align-items: start;
 }
 .contact-head { margin-bottom: 14px; }
-.contact-title { margin: 0 0 2px; font-size: 20px; }
+.contact-title { margin: 0 0 2px; font-size: 20px; font-family: var(--font-display); }
 .contact-sub { margin: 0; }
 
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .contact-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
 .contact-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
+  font-weight: 500;
 }
 .contact-field input,
 .contact-field textarea {
-  background: var(--elevated);
+  background: var(--glass);
   border: 1px solid var(--border-strong);
   color: var(--text);
   border-radius: var(--radius-sm);
@@ -116,19 +118,20 @@
   font: inherit;
   font-size: 13.5px;
   resize: vertical;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 .contact-field input:focus,
 .contact-field textarea:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
 }
 .contact-field input[aria-invalid="true"],
 .contact-field textarea[aria-invalid="true"] {
   border-color: var(--err);
 }
 .contact-err { color: var(--err); font-size: 12px; }
-.contact-count { text-align: right; font-size: 11px; margin-top: 4px; }
+.contact-count { text-align: right; font-size: 11px; margin-top: 4px; color: var(--text-muted); }
 .contact-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .contact-chips .chip { cursor: pointer; }
 
@@ -167,8 +170,8 @@
   gap: 10px;
   padding: 40px 0;
 }
-.contact-state-icon { color: var(--ok); }
-.contact-state h2 { margin: 0; font-size: 18px; }
+.contact-state-icon { color: var(--ok); filter: drop-shadow(0 0 10px var(--ok)); }
+.contact-state h2 { margin: 0; font-size: 18px; font-family: var(--font-display); }
 
 .contact-why {
   margin: 0;
@@ -180,7 +183,302 @@
 }
 .contact-why strong { color: var(--text); font-weight: 600; }
 .contact-why a { color: var(--accent); }
-.contact-hint { margin-top: 14px; font-size: 12px; }
+.contact-hint { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+
+/* ==================================================================== */
+/* Resume — editorial CV                                                */
+/* ==================================================================== */
+
+.resume {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+/* Header */
+.resume-hero {
+  position: relative;
+  padding: 26px 26px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 160% at 85% -30%, rgba(157, 139, 255, 0.16), transparent 55%),
+    radial-gradient(110% 150% at -10% 130%, rgba(56, 212, 240, 0.12), transparent 55%),
+    var(--glass);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+.resume-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(180, 200, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 200, 255, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(ellipse 80% 90% at 100% 0%, #000 10%, transparent 65%);
+  pointer-events: none;
+}
+.resume-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.resume-role {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--accent-2);
+  font-weight: 500;
+}
+.resume-loc {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.resume-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+}
+.resume-contact .chip {
+  color: var(--accent);
+  border-color: rgba(157, 139, 255, 0.25);
+}
+.resume-contact .chip svg {
+  opacity: 0.8;
+}
+
+/* Stats strip */
+.resume-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+}
+.resume-stat {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  text-align: center;
+}
+.resume-stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.resume-stat span {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.resume-summary {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 14px 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Section scaffolding */
+.resume-section {
+  margin-top: 26px;
+}
+.resume-section > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+.resume-section > h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+}
+
+.resume-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+@media (max-width: 760px) {
+  .resume-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Skill bars */
+.skill-group {
+  margin-bottom: 16px;
+}
+.skill-group-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.skill-row .skill-name {
+  width: 92px;
+  flex: none;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.skill-row .bar {
+  flex: 1;
+  height: 5px;
+}
+.skill-row .skill-pct {
+  width: 34px;
+  flex: none;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Timeline */
+.resume-timeline {
+  position: relative;
+  padding-left: 20px;
+}
+.resume-timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 18px;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 10px var(--accent-dim);
+}
+.timeline-item h3 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.timeline-item .org {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+}
+.timeline-item .period {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  display: inline-block;
+  margin-top: 2px;
+}
+.timeline-item p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin: 6px 0 0;
+  line-height: 1.55;
+}
+.timeline-item ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  display: grid;
+  gap: 3px;
+}
+.timeline-item ul li::marker {
+  color: var(--accent);
+}
+
+/* Education + certs */
+.resume-list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+.resume-list-item .what {
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.resume-list-item .where {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+}
+.resume-list-item .when {
+  flex: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+@media (max-width: 760px) {
+  .resume-contact {
+    justify-content: center;
+  }
+}
 
 @media (max-width: 760px) {
   .contact-layout { grid-template-columns: 1fr; }

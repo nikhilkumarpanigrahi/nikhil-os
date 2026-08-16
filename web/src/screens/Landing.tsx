@@ -14,10 +14,14 @@ export function Landing({ onEnter, repoUrl }: Props) {
   return (
     <main className="landing">
       <div className="landing-inner">
-        <div className="eyebrow">An AI-native personal computing environment</div>
-        <h1>
-          NIKHIL<span className="slash">//</span>OS
-        </h1>
+        <div className="eyebrow">
+          <i className="dot" /> An AI-native personal computing environment
+        </div>
+        <div className="brand-glow">
+          <h1>
+            NIKHIL<span className="slash">//</span>OS
+          </h1>
+        </div>
         <p className="tagline">
           A Unix-inspired operating system running in your browser — a simulated
           kernel, a real shell, and a desktop built on top of both.
@@ -26,7 +30,7 @@ export function Landing({ onEnter, repoUrl }: Props) {
           <button className="btn btn-primary" onClick={onEnter} autoFocus>
             Enter NIKHIL//OS
           </button>
-          <button className="btn" onClick={() => window.open(repoUrl, "_blank")}>
+          <button className="btn btn-glass" onClick={() => window.open(repoUrl, "_blank")}>
             Explore the architecture ↗
           </button>
         </div>
@@ -37,6 +41,12 @@ export function Landing({ onEnter, repoUrl }: Props) {
             </span>
           ))}
         </div>
+        <p className="term-line">
+          <span className="prompt">nikhil@os</span>
+          <span> ~ $ </span>
+          <span className="out">uname -a</span>
+          <span> · NIKHIL-OS WASM kernel ready</span>
+        </p>
       </div>
       <footer>
         MIT licensed · fork it for your own portfolio ·{" "}

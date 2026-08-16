@@ -8,6 +8,39 @@ interface Props {
   version: string;
 }
 
+const THEMES = ["aurora", "terminal", "noir"] as const;
+type Theme = (typeof THEMES)[number];
+
+function useTheme(): [Theme, (t: Theme) => void] {
+  const [theme, setTheme] = useState<Theme>(() => {
+    const t = document.documentElement.dataset.theme as Theme | undefined;
+    return THEMES.includes(t as Theme) ? (t as Theme) : "aurora";
+  });
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+  return [theme, setTheme];
+}
+
+function ThemeSwitcher() {
+  const [theme, setTheme] = useTheme();
+  return (
+    <div className="theme-switch" role="group" aria-label="Color theme">
+      {THEMES.map((t) => (
+        <button
+          key={t}
+          className={`theme-swatch${theme === t ? " active" : ""}`}
+          data-theme={t}
+          title={t[0].toUpperCase() + t.slice(1)}
+          aria-label={`${t} theme`}
+          aria-pressed={theme === t}
+          onClick={() => setTheme(t)}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function SystemBar({ onPower, onTogglePalette, version }: Props) {
   const snap = useSystemSnapshot(2000);
   const [now, setNow] = useState(() => new Date());
@@ -38,6 +71,7 @@ export function SystemBar({ onPower, onTogglePalette, version }: Props) {
 
       <div className="sysbar-right">
         <Telemetry snap={snap} />
+        <ThemeSwitcher />
         <div className="clock" title={now.toLocaleString()}>
           <div>{time}</div>
           <div className="dim" style={{ fontSize: 10 }}>{date}</div>
