@@ -145,7 +145,8 @@ AWS_EC2_HOST          # EC2 public IP or hostname
 AWS_EC2_USER          # deploy user created by provision.sh
 AWS_EC2_KEY           # private SSH key (PEM) for that user
 DOMAIN                # api.nikhil.is-a.dev
-POSTGRES_PASSWORD     # long random string
+POSTGRES_PASSWORD     # openssl rand -hex 32 — hex only: compose interpolates
+                      #   this one through ${...}, so a $ in it would be mangled
 ADMIN_PASSWORD_HASH   # output of cargo run --bin hashgen
 ADMIN_JWT_SECRET      # openssl rand -base64 48
 TELEGRAM_BOT_TOKEN
