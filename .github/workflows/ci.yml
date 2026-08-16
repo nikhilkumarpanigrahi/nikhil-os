@@ -62,3 +62,14 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: web
+      # GitHub Pages serves the site from a subpath (/nikhil-os/). Vite's
+      # `base: "./"` emits relative asset URLs; an absolute one (e.g. /assets/...)
+      # 404s there and the app renders a white screen. Fail the build if any ever
+      # sneaks back in — this is a permanent guard, not a postmortem.
+      - name: Guard: asset paths must be relative (subpath-safe)
+        run: >-
+          node -e "const h=require('fs').readFileSync('dist/index.html','utf8');
+          const bad=[...h.matchAll(/(?:src|href)=\"\\/(?!\\/)/g)];
+          if(bad.length){console.error('Absolute asset path(s) in dist/index.html:',bad.map(m=>m[0]));process.exit(1)}
+          console.log('OK: all asset paths are relative')"
+        working-directory: web
