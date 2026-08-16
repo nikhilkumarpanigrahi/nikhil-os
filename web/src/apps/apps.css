@@ -1,0 +1,85 @@
+/* Shared application chrome: every app fills its window body. */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex: none;
+}
+
+.app-toolbar .title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.app-body {
+  flex: 1;
+  overflow: auto;
+  padding: 14px;
+}
+
+.app-empty {
+  color: var(--text-muted);
+  padding: 24px;
+  text-align: center;
+}
+
+/* data tables (system monitor) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.data-table th {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+}
+.data-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid rgba(36, 40, 45, 0.5);
+}
+.data-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* project cards */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+/* bars and gauges */
+.bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--elevated);
+  overflow: hidden;
+}
+.bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+}

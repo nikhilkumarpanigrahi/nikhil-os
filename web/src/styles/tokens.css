@@ -1,0 +1,45 @@
+/* NIKHIL//OS design tokens — dark-first, from the design system document. */
+:root {
+  /* surfaces */
+  --bg: #08090a;
+  --surface: #0e1012;
+  --elevated: #15181c;
+  --border: #24282d;
+  --border-strong: #33383f;
+
+  /* text */
+  --text: #f5f7fa;
+  --text-secondary: #8b929c;
+  --text-muted: #5b626b;
+
+  /* accent — one signature accent used sparingly */
+  --accent: #5eead4;
+  --accent-dim: rgba(94, 234, 212, 0.12);
+
+  /* semantic */
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --err: #f87171;
+
+  /* status of the simulated machine */
+  --proc-new: var(--text-muted);
+  --proc-ready: var(--accent);
+  --proc-running: var(--ok);
+  --proc-waiting: var(--warn);
+  --proc-terminated: var(--err);
+
+  /* type */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  /* metrics */
+  --sysbar-h: 40px;
+  --sidebar-w: 220px;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  --shadow-window:
+    0 0 0 1px rgba(0, 0, 0, 0.4), 0 18px 48px rgba(0, 0, 0, 0.55);
+
+  --transition-fast: 120ms ease;
+}

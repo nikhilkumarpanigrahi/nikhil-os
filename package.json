@@ -1,0 +1,15 @@
+{
+  "name": "nikhil-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NIKHIL//OS — an AI-native personal computing environment.",
+  "scripts": {
+    "build:core": "cd crates/core && wasm-pack build --target bundler --out-dir ../../web/pkg --features wasm",
+    "dev": "npm --prefix web run dev",
+    "test": "npm --prefix web run test",
+    "build": "npm --prefix web run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

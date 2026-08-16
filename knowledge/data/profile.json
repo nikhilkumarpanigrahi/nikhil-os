@@ -1,0 +1,124 @@
+{
+  "person": {
+    "name": "Nikhil Kumar Panigrahi",
+    "role": "Full-Stack & Systems-Oriented Engineer",
+    "location": "India",
+    "summary": "Engineer building NIKHIL//OS — an AI-native personal computing environment — with Rust, WebAssembly, React, and real operating-system internals. Interested in systems programming, AI/ML, and developer tooling.",
+    "contact": {
+      "email": "REPLACE-WITH-EMAIL",
+      "github": "nikhilkumarpanigrahi",
+      "linkedin": "REPLACE-WITH-LINKEDIN",
+      "website": "REPLACE-WITH-WEBSITE"
+    }
+  },
+  "highlights": [
+    "Systems programming in Rust",
+    "AI-native product engineering",
+    "Full-stack development",
+    "Open-source"
+  ],
+  "skills": [
+    { "name": "Rust", "category": "Systems", "level": 80 },
+    { "name": "WebAssembly", "category": "Systems", "level": 70 },
+    { "name": "TypeScript", "category": "Frontend", "level": 85 },
+    { "name": "React", "category": "Frontend", "level": 80 },
+    { "name": "Node.js", "category": "Backend", "level": 75 },
+    { "name": "Python", "category": "Backend", "level": 70 },
+    { "name": "SQL", "category": "Data", "level": 65 },
+    { "name": "Git", "category": "Tooling", "level": 85 }
+  ],
+  "technologies": [
+    "Rust", "WebAssembly", "TypeScript", "React", "Vite", "Node.js",
+    "Python", "PostgreSQL", "Git", "Linux", "Docker"
+  ],
+  "projects": [
+    {
+      "id": "nikhil-os",
+      "title": "NIKHIL//OS",
+      "category": "systems",
+      "summary": "An AI-native personal computing environment — a Unix-inspired operating system that runs in the browser.",
+      "description": "A portfolio that behaves like a real OS: a Rust core compiled to WebAssembly with a process manager, round-robin scheduler, virtual filesystem, typed IPC, service manager, package manager, and a shell with real pipelines — all wrapped in a React desktop environment. This repository.",
+      "architecture": "Rust core → WASM bridge → React desktop. The UI is a surface over observable core state; no telemetry is faked.",
+      "technologies": ["Rust", "WebAssembly", "TypeScript", "React", "Vite"],
+      "highlights": [
+        "Simulated OS core with processes, scheduler, VFS, IPC, syscalls",
+        "nish shell with pipes, redirection, aliases, history, autocomplete",
+        "Live /proc and /sys virtual filesystems backed by real runtime state",
+        "Compiled to WASM; same core targets the future Tauri desktop edition"
+      ],
+      "repo": "https://github.com/nikhilkumarpanigrahi/nikhil-os",
+      "demo": "https://nikhilkumarpanigrahi.github.io/nikhil-os/",
+      "evidence": [
+        { "title": "Source repository", "url": "https://github.com/nikhilkumarpanigrahi/nikhil-os" },
+        { "title": "Web Edition (GitHub Pages)", "url": "https://nikhilkumarpanigrahi.github.io/nikhil-os/" }
+      ]
+    },
+    {
+      "id": "your-project-1",
+      "title": "Your Project (placeholder)",
+      "category": "backend",
+      "summary": "REPLACE — describe a project you've built.",
+      "description": "REPLACE — add a longer description. What problem did it solve, what did you learn, what are the notable implementation details?",
+      "architecture": "REPLACE — one or two sentences on the architecture.",
+      "technologies": ["Node.js", "PostgreSQL"],
+      "highlights": ["REPLACE — a concrete, verifiable bullet"],
+      "repo": "",
+      "demo": "",
+      "evidence": [
+        { "title": "REPLACE — evidence title (link, repo, live demo)", "url": "" }
+      ]
+    },
+    {
+      "id": "your-project-2",
+      "title": "Your Project (placeholder)",
+      "category": "open-source",
+      "summary": "REPLACE — an open-source contribution or project.",
+      "description": "REPLACE — link to the contribution, PR, or repo. What did you change or build?",
+      "architecture": "REPLACE",
+      "technologies": ["TypeScript", "React"],
+      "highlights": ["REPLACE"],
+      "repo": "",
+      "demo": "",
+      "evidence": [
+        { "title": "REPLACE", "url": "" }
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "role": "REPLACE — Role",
+      "organization": "REPLACE — Organization",
+      "period": "REPLACE — e.g. Jun 2025 – Present",
+      "summary": "REPLACE — what you did.",
+      "highlights": ["REPLACE — a measurable outcome"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "REPLACE — Degree",
+      "institution": "REPLACE — Institution",
+      "period": "REPLACE — Year"
+    }
+  ],
+  "certifications": [
+    { "name": "REPLACE", "issuer": "REPLACE", "year": "REPLACE" }
+  ],
+  "achievements": [
+    { "title": "REPLACE", "description": "REPLACE", "evidence": [] }
+  ],
+  "contributions": [
+    { "repo": "REPLACE", "description": "REPLACE" }
+  ],
+  "claims": [
+    {
+      "claim": "NIKHIL//OS runs a real simulated OS in the browser, driven by a Rust core compiled to WebAssembly.",
+      "evidence": ["nikhil-os"],
+      "confidence": 0.95
+    },
+    {
+      "claim": "The shell executes pipelines like `ps | grep ai` through a real parser and executor.",
+      "evidence": ["nikhil-os"],
+      "confidence": 0.95
+    }
+  ]
+}

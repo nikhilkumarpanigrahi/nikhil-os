@@ -1,0 +1,23 @@
+# NIKHIL//OS — Rust workspace
+#
+# The shared core is a Rust library that compiles to native code (headless
+# operation + tests), to WebAssembly (Web Edition), and eventually powers the
+# Tauri Desktop Edition.
+
+[workspace]
+resolver = "2"
+members = ["crates/core"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Nikhil Kumar Panigrahi"]
+license = "MIT"
+repository = "https://github.com/nikhilkumarpanigrahi/nikhil-os"
+
+[workspace.dependencies]
+wasm-bindgen = "0.2"
+
+[profile.release]
+opt-level = "s"
+lto = true

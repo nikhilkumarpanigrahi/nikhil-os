@@ -1,0 +1,25 @@
+# Rust / Cargo
+/target
+**/*.rs.bk
+
+# Web
+node_modules
+dist
+dist-ssr
+*.local
+web/pkg
+web/coverage
+web/test-results
+web/playwright-report
+
+# Editors / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Logs
+*.log
+npm-debug.log*
