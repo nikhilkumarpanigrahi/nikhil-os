@@ -22,7 +22,10 @@ COPY migrations ./migrations
 COPY .sqlx ./.sqlx
 COPY src ./src
 ENV SQLX_OFFLINE=true
-RUN cargo build --release --locked --config "profile.release.lto=${LTO}"
+# The --config value must be a quoted TOML string — `profile.release.lto=thin`
+# is a TOML parse error (bare words are not valid TOML values). The \" escapes
+# the quotes so the shell hands cargo `profile.release.lto="thin"`.
+RUN cargo build --release --locked --config "profile.release.lto=\"${LTO}\""
 
 FROM debian:bookworm-slim
 RUN apt-get update \
