@@ -8,6 +8,9 @@ import wasm from "vite-plugin-wasm";
 // (The new wasm-bindgen bundler output is synchronous — no top-level await.)
 export default defineConfig({
   plugins: [react(), wasm()],
+  // Relative base: the app must work from any subpath (GitHub Pages serves
+  // it under /<repo>/), not just the domain root.
+  base: "./",
   build: {
     target: "esnext",
     assetsInlineLimit: 1024 * 1024, // keep the .wasm inline for single-file deploys
