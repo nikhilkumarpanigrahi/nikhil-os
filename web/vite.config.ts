@@ -1,5 +1,6 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 import wasm from "vite-plugin-wasm";
 
 // The WASM core ships as a bundler-target wasm-bindgen package in `./pkg`.
@@ -15,5 +16,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     css: true,
+    // Playwright specs live in ./e2e and must not run under vitest.
+    exclude: [...configDefaults.exclude, "e2e/**"],
   },
 });
