@@ -25,6 +25,10 @@ COPY Cargo.toml Cargo.lock ./
 COPY migrations ./migrations
 COPY .sqlx ./.sqlx
 COPY src ./src
+# knowledge.rs embeds ../../knowledge/data/profile.json (include_str!) — the
+# canonical profile data, one source shared with the WASM core. It must be in
+# the builder or `cargo build` fails at compile time.
+COPY knowledge ./knowledge
 ENV SQLX_OFFLINE=true
 # The --config value must be a quoted TOML string — `profile.release.lto=thin`
 # is a TOML parse error (bare words are not valid TOML values). The \" escapes
