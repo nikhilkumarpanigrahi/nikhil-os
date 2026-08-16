@@ -2,16 +2,20 @@
 #
 # Multi-stage build.
 #
-# Builder: rust:1.85-alpine (musl static link). ring/rustls (sqlx + reqwest TLS)
+# Builder: rust:1.97-alpine (musl static link). ring/rustls (sqlx + reqwest TLS)
 # need a C toolchain, so install gcc + musl-dev. The Alpine rust image targets
 # musl by default, so `cargo build --release` yields a static binary that runs
 # on the slim glibc runtime below.
+#
+# The toolchain is pinned to 1.97 to match the stable rustc used to generate
+# Cargo.lock — locked deps (e.g. time 0.3.55) require rustc ≥ 1.88, and older
+# images fail the build. Keep this in sync with the local toolchain.
 #
 # LTO is an ARG (default `thin`) so docker-compose can override it to `off` on
 # the free-tier t2.micro — a 1 GB box builds much faster/more safely without
 # full LTO, at the cost of a slightly larger binary. CI's `docker build .`
 # sanity check inherits the default.
-FROM rust:1.85-alpine AS builder
+FROM rust:1.97-alpine AS builder
 ARG LTO=thin
 WORKDIR /app
 RUN apk add --no-cache musl-dev gcc

@@ -22,10 +22,12 @@ jobs:
           targets: wasm32-unknown-unknown
       # Pin wasm-pack: v0.14 removed `--features` from `build`; latest-vs-stable
       # would otherwise break this workflow when upstream releases. Cargo args
-      # go after `--` (works on every version).
+      # go after `--` (works on every version). The `version` input doubles as
+      # the release tag AND the asset-name prefix, so it MUST keep the leading
+      # `v` (drop it and the action 404s on both).
       - uses: jetli/wasm-pack-action@v0.4.0
         with:
-          version: "0.15.0"
+          version: "v0.15.0"
       - name: Format check
         run: cargo fmt --all -- --check
       - name: Clippy
@@ -47,7 +49,7 @@ jobs:
           targets: wasm32-unknown-unknown
       - uses: jetli/wasm-pack-action@v0.4.0
         with:
-          version: "0.15.0"
+          version: "v0.15.0"
       - uses: actions/setup-node@v4
         with:
           node-version: 20
