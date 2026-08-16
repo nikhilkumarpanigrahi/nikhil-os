@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NIKHIL//OS — Inbox</title>
+<style>
+  :root {
+    --bg: #08090a; --surface: #0e1012; --elevated: #15181c;
+    --border: #24282d; --border-strong: #33383f;
+    --text: #f5f7fa; --text-secondary: #8b929c; --text-muted: #5b626b;
+    --accent: #5eead4; --accent-dim: rgba(94,234,212,.12);
+    --ok: #4ade80; --warn: #fbbf24; --err: #f87171;
+    --radius: 10px; --radius-sm: 6px;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 14px; line-height: 1.5;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+           border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px; }
+  h1 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+  h1 .accent { color: var(--accent); }
+  .muted { color: var(--text-muted); font-size: 12px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+           gap: 12px; margin-bottom: 24px; }
+  .stat { background: var(--surface); border: 1px solid var(--border);
+          border-radius: var(--radius); padding: 14px 16px; }
+  .stat .n { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat.new .n { color: var(--accent); }
+  .stat.read .n { color: var(--ok); }
+  .stat.replied .n { color: var(--warn); }
+  .stat.archived .n { color: var(--text-muted); }
+  .stat .l { color: var(--text-secondary); font-size: 12px; text-transform: uppercase;
+             letter-spacing: .06em; margin-top: 2px; }
+  .daily { background: var(--surface); border: 1px solid var(--border);
+           border-radius: var(--radius); padding: 16px; margin-bottom: 24px; }
+  .daily h2, .section h2 { font-size: 13px; color: var(--text-secondary); text-transform: uppercase;
+             letter-spacing: .06em; margin: 0 0 12px; }
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 60px; }
+  .bars .bar { flex: 1; background: var(--accent-dim); border-radius: 3px 3px 0 0;
+               min-height: 2px; position: relative; }
+  .bars .bar:hover { background: var(--accent); }
+  .bars .bar span { position: absolute; bottom: 100%; left: 0; right: 0;
+                    text-align: center; font-size: 10px; color: var(--text-secondary); }
+  .section { margin-bottom: 24px; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .btn { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-strong);
+         border-radius: var(--radius-sm); padding: 6px 12px; font: inherit; cursor: pointer;
+         transition: border-color .12s ease, color .12s ease; }
+  .btn:hover { color: var(--text); border-color: var(--accent); }
+  .btn.primary { background: var(--accent-dim); color: var(--accent); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  select, input { background: var(--elevated); color: var(--text); border: 1px solid var(--border-strong);
+                  border-radius: var(--radius-sm); padding: 6px 10px; font: inherit; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface);
+          border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border);
+           vertical-align: top; font-size: 13px; }
+  th { color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em;
+       font-size: 11px; background: var(--elevated); }
+  tr:last-child td { border-bottom: none; }
+  td.msg { max-width: 420px; }
+  td .name { font-weight: 600; }
+  td .email { color: var(--text-secondary); font-size: 12px; }
+  td .subject { color: var(--text-secondary); margin-top: 2px; }
+  td .body { margin-top: 6px; color: var(--text); white-space: pre-wrap; }
+  td .meta { color: var(--text-muted); font-size: 11px; margin-top: 6px; font-family: var(--mono); }
+  .status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px;
+            text-transform: uppercase; letter-spacing: .04em; border: 1px solid var(--border-strong); }
+  .status.new { color: var(--accent); border-color: var(--accent-dim); }
+  .status.read { color: var(--ok); }
+  .status.replied { color: var(--warn); }
+  .status.archived { color: var(--text-muted); }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .empty { color: var(--text-muted); padding: 32px; text-align: center; }
+  .toast { position: fixed; right: 20px; bottom: 20px; background: var(--elevated);
+           border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+           padding: 10px 14px; display: none; z-index: 10; max-width: 340px; }
+  .toast.err { border-color: var(--err); color: var(--err); }
+  .toast.show { display: block; }
+  .login { max-width: 340px; margin: 120px auto 0; background: var(--surface);
+           border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+  .login h1 { margin-bottom: 16px; }
+  .login label { display: block; color: var(--text-secondary); font-size: 12px; margin-bottom: 6px; }
+  .login input { width: 100%; margin-bottom: 16px; }
+  .login .btn { width: 100%; padding: 10px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+
+<div id="login" class="login">
+  <h1>NIKHIL<span class="accent">//</span>OS <span class="muted">inbox</span></h1>
+  <label for="pw">Admin password</label>
+  <input id="pw" type="password" autocomplete="current-password" autofocus />
+  <button id="loginBtn" class="btn primary">Unlock</button>
+</div>
+
+<div id="app" class="wrap hidden">
+  <header>
+    <div>
+      <h1>NIKHIL<span class="accent">//</span>OS <span class="muted">— visitor inbox</span></h1>
+      <div class="muted" id="etagLine"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="refreshBtn" class="btn">Refresh</button>
+      <button id="logoutBtn" class="btn">Log out</button>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat new"><div class="n" id="sNew">–</div><div class="l">New</div></div>
+    <div class="stat read"><div class="n" id="sRead">–</div><div class="l">Read</div></div>
+    <div class="stat replied"><div class="n" id="sReplied">–</div><div class="l">Replied</div></div>
+    <div class="stat archived"><div class="n" id="sArchived">–</div><div class="l">Archived</div></div>
+    <div class="stat"><div class="n" id="sTotal">–</div><div class="l">Total</div></div>
+  </div>
+
+  <div class="daily">
+    <h2>Last 14 days</h2>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="section">
+    <div class="toolbar">
+      <h2 style="margin:0">Messages</h2>
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="new">New</option>
+        <option value="read">Read</option>
+        <option value="replied">Replied</option>
+        <option value="archived">Archived</option>
+      </select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>From</th><th>Message</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="empty" class="empty hidden">No messages yet. Open the OS and hit the Contact app — this fills up fast.</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const tokenKey = "nikhilos.admin.token";
+  const api = (path, opts = {}) =>
+    fetch(path, {
+      headers: { "Content-Type": "application/json",
+                 ...(opts.token ? { Authorization: "Bearer " + opts.token } : {}) },
+      ...opts,
+    }).then(async (r) => {
+      const data = await r.json().catch(() => ({}));
+      if (r.status === 401) throw Object.assign(new Error("unauthorized"), { status: 401 });
+      if (!r.ok) throw new Error(data.error && data.error.message || "HTTP " + r.status);
+      return data;
+    });
+
+  let token = sessionStorage.getItem(tokenKey);
+
+  const toast = (msg, err) => {
+    const t = $("toast");
+    t.textContent = msg;
+    t.className = "toast show" + (err ? " err" : "");
+    clearTimeout(toast._h);
+    toast._h = setTimeout(() => (t.className = "toast"), 4000);
+  };
+
+  const fmt = (iso) => new Date(iso).toLocaleString();
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function showLogin() {
+    $("login").classList.remove("hidden");
+    $("app").classList.add("hidden");
+    $("pw").focus();
+  }
+  function showApp() {
+    $("login").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    load();
+  }
+
+  async function load() {
+    if (!token) return showLogin();
+    try {
+      const [stats, list] = await Promise.all([
+        api("/admin/api/stats", { token }),
+        api("/admin/api/messages?status=" + encodeURIComponent($("statusFilter").value) + "&limit=50", { token }),
+      ]);
+      renderStats(stats);
+      renderRows(list.messages || []);
+      $("etagLine").textContent = "knowledge etag " + (stats.knowledge_etag || "");
+    } catch (e) {
+      if (e.status === 401) { sessionStorage.removeItem(tokenKey); token = null; return showLogin(); }
+      toast(e.message, true);
+    }
+  }
+
+  function renderStats(s) {
+    $("sNew").textContent = s.counts.new; $("sRead").textContent = s.counts.read;
+    $("sReplied").textContent = s.counts.replied; $("sArchived").textContent = s.counts.archived;
+    $("sTotal").textContent = s.counts.total;
+
+    const days = s.daily || [];
+    const max = Math.max(1, ...days.map((d) => d.count));
+    $("bars").innerHTML = days
+      .slice()
+      .reverse()
+      .map((d) => {
+        const pct = Math.max(2, Math.round((d.count / max) * 100));
+        return `<div class="bar" style="height:${pct}%" title="${esc(d.day)} — ${d.count}"><span>${d.count}</span></div>`;
+      })
+      .join("");
+  }
+
+  function renderRows(msgs) {
+    const rows = $("rows");
+    $("empty").classList.toggle("hidden", msgs.length > 0);
+    rows.innerHTML = msgs
+      .map((m) => {
+        const status = (s) => `<span class="status ${esc(s)}">${esc(s)}</span>`;
+        const buttons = ["read", "replied", "archived", "new"]
+          .filter((s) => s !== m.status)
+          .map((s) => `<button class="btn" data-id="${m.id}" data-status="${s}">${s}</button>`)
+          .join("");
+        return `<tr>
+          <td>
+            <div class="name">${esc(m.name)}</div>
+            <div class="email">${esc(m.email)}</div>
+            <div class="subject">${esc(m.subject || "")}</div>
+          </td>
+          <td class="msg">
+            <div class="body">${esc(m.body)}</div>
+            <div class="meta">#${esc(m.topic)} · ${fmt(m.created_at)} · ${esc(m.ip || "")}</div>
+          </td>
+          <td>${status(m.status)}</td>
+          <td><div class="actions">${buttons}</div></td>
+        </tr>`;
+      })
+      .join("");
+  }
+
+  async function setStatus(id, status) {
+    try {
+      await api("/admin/api/messages/" + id, { method: "PATCH", token, body: JSON.stringify({ status }) });
+      load();
+    } catch (e) {
+      toast(e.message, true);
+    }
+  }
+
+  $("loginBtn").addEventListener("click", async () => {
+    const pw = $("pw").value;
+    try {
+      const r = await api("/admin/api/login", { method: "POST", body: JSON.stringify({ password: pw }) });
+      token = r.token;
+      sessionStorage.setItem(tokenKey, token);
+      $("pw").value = "";
+      showApp();
+    } catch (e) {
+      toast(e.message || "login failed", true);
+    }
+  });
+  $("pw").addEventListener("keydown", (e) => e.key === "Enter" && $("loginBtn").click());
+
+  $("logoutBtn").addEventListener("click", () => {
+    sessionStorage.removeItem(tokenKey); token = null; showLogin();
+  });
+  $("refreshBtn").addEventListener("click", load);
+  $("statusFilter").addEventListener("change", load);
+
+  $("rows").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-id]");
+    if (b) setStatus(b.dataset.id, b.dataset.status);
+  });
+
+  setInterval(load, 30000);
+  showLogin();
+})();
+</script>
+</body>
+</html>

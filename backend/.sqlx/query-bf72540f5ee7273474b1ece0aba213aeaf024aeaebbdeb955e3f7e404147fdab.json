@@ -1,0 +1,44 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT\n            COUNT(*) FILTER (WHERE status = 'new')     AS new_count,\n            COUNT(*) FILTER (WHERE status = 'read')    AS read_count,\n            COUNT(*) FILTER (WHERE status = 'replied') AS replied_count,\n            COUNT(*) FILTER (WHERE status = 'archived') AS archived_count,\n            COUNT(*)                                    AS total\n         FROM messages",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "new_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "read_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "replied_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "archived_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 4,
+        "name": "total",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "bf72540f5ee7273474b1ece0aba213aeaf024aeaebbdeb955e3f7e404147fdab"
+}

@@ -1,0 +1,11 @@
+target
+.env
+.git
+.gitignore
+Dockerfile
+.dockerignore
+docker-compose.yml
+Caddyfile
+README.md
+tests
+*.md

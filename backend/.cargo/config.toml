@@ -1,0 +1,4 @@
+[env]
+# Never hit a live database during builds — CI and the Docker build have no DB.
+# The committed .sqlx/ cache carries the checked queries.
+SQLX_OFFLINE = "true"

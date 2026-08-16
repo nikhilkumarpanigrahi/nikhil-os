@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
+import { Contact } from "./Contact";
 import { Files } from "./Files";
 import { Projects } from "./Projects";
 import { Recruiter } from "./Recruiter";
@@ -13,6 +14,7 @@ export type AppId =
   | "projects"
   | "resume"
   | "recruiter"
+  | "contact"
   | "system-monitor"
   | "welcome";
 
@@ -104,6 +106,18 @@ export const APPS: Record<AppId, AppDef> = {
     component: Recruiter,
     defaultSize: { w: 640, h: 500 },
   },
+  contact: {
+    id: "contact",
+    title: "Contact",
+    icon: (
+      <Icon>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </Icon>
+    ),
+    component: Contact,
+    defaultSize: { w: 760, h: 560 },
+  },
   "system-monitor": {
     id: "system-monitor",
     title: "System Monitor",
@@ -136,6 +150,7 @@ export const APP_ORDER: AppId[] = [
   "projects",
   "resume",
   "recruiter",
+  "contact",
   "system-monitor",
   "welcome",
 ];

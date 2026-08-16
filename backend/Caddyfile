@@ -1,0 +1,15 @@
+# Caddy automatically provisions and renews TLS certificates (Let's Encrypt,
+# HTTP-01 challenge on port 80). `DOMAIN` comes from the compose environment.
+{$DOMAIN} {
+	encode zstd gzip
+
+	# Strip the request's X-Forwarded-For? No — keep Caddy's hop appended.
+	# The API trusts the FIRST entry as the real client IP (single ingress).
+	reverse_proxy api:8080
+
+	# A little structure for the logs
+	log {
+		output stdout
+		format json
+	}
+}

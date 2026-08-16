@@ -1,0 +1,79 @@
+name: Deploy Backend
+
+# Deploys the backend to the free-tier EC2 box via SSH.
+#
+# Preconditions (one-time, see scripts/provision.sh):
+#   - The repo is cloned at ~/nikhil-os for the deploy user (read-only deploy key).
+#   - The deploy user is in the `docker` group.
+#   - Security group allows 22/80/443.
+#
+# On every push touching backend/**, the workflow pulls the latest code, writes
+# .env from repository secrets, rebuilds the containers, and polls /healthz.
+
+on:
+  push:
+    branches: [main]
+    paths: [backend/**, .github/workflows/backend-deploy.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: backend-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: EC2 · docker compose up
+    runs-on: ubuntu-latest
+    environment:
+      name: backend-production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USER }}
+          key: ${{ secrets.AWS_EC2_KEY }}
+          command_timeout: 30m
+          script: |
+            set -euo pipefail
+            REPO="$HOME/nikhil-os"
+            if [ ! -d "$REPO" ]; then
+              echo "error: $REPO is not cloned. Run scripts/provision.sh on the box first." >&2
+              exit 1
+            fi
+            cd "$REPO"
+            git fetch --all --prune
+            git checkout main
+            git reset --hard origin/main
+
+            cd backend
+            cat > .env <<'EOF'
+            POSTGRES_DB=nikhilos
+            POSTGRES_USER=nikhilos
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            DOMAIN=${{ secrets.DOMAIN }}
+            ADMIN_PASSWORD_HASH=${{ secrets.ADMIN_PASSWORD_HASH }}
+            ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}
+            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+            CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
+            CONTACT_RATE_LIMIT=${{ secrets.CONTACT_RATE_LIMIT }}
+            EOF
+
+            docker compose up -d --build
+            docker compose ps
+
+            echo "--- polling https://${{ secrets.DOMAIN }}/healthz ---"
+            for i in $(seq 1 30); do
+              code=$(curl -s -o /dev/null -w '%{http_code}' "https://${{ secrets.DOMAIN }}/healthz" || true)
+              if [ "$code" = "200" ]; then
+                echo "healthy: https://${{ secrets.DOMAIN }}/healthz -> 200"
+                exit 0
+              fi
+              sleep 10
+            done
+            echo "error: health check did not return 200 after 5 minutes" >&2
+            docker compose logs --tail=50 api || true
+            exit 1

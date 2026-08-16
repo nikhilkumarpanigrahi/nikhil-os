@@ -40,6 +40,11 @@ jobs:
       - name: Install + build web
         run: npm ci && npm run build
         working-directory: web
+        env:
+          # Live backend origin for the Contact app. Set the repository secret
+          # VITE_API_URL=https://api.nikhil.is-a.dev to activate live contact;
+          # unset, the app stays offline-first (mailto fallback) by design.
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - uses: actions/configure-pages@v5
         with:
           enablement: true

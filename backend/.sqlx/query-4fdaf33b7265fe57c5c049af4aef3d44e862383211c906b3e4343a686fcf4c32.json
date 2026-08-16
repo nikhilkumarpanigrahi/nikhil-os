@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE messages\n         SET status = $1, read_at = CASE WHEN $2 THEN COALESCE(read_at, now()) ELSE read_at END\n         WHERE id = $3",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Bool",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4fdaf33b7265fe57c5c049af4aef3d44e862383211c906b3e4343a686fcf4c32"
+}

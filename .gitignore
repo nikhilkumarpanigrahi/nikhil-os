@@ -1,6 +1,12 @@
 # Rust / Cargo
 /target
 **/*.rs.bk
+backend/target
+
+# Secrets / env
+.env
+backend/.env
+*.pem
 
 # Web
 node_modules

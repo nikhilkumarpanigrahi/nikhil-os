@@ -11,6 +11,24 @@ export default defineConfig({
   // Relative base: the app must work from any subpath (GitHub Pages serves
   // it under /<repo>/), not just the domain root.
   base: "./",
+  server: {
+    // In dev, VITE_API_URL is unset so the Contact app calls `/api/...`.
+    // Proxy those calls to the local Rust backend — no CORS, no config.
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
+      "/admin": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
+      "/healthz": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     target: "esnext",
     assetsInlineLimit: 1024 * 1024, // keep the .wasm inline for single-file deploys

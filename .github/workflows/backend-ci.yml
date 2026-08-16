@@ -1,0 +1,60 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths: [backend/**, .github/workflows/backend-ci.yml]
+  pull_request:
+    branches: [main]
+    paths: [backend/**, .github/workflows/backend-ci.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Rust backend (fmt · clippy · test · docker)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: nikhilos_test
+          POSTGRES_USER: nikhilos
+          POSTGRES_PASSWORD: nikhilos_ci_pw
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nikhilos -d nikhilos_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      # Compiles never need a DB (SQLX_OFFLINE + committed .sqlx cache); only
+      # the integration tests hit this service container.
+      DATABASE_URL: postgres://nikhilos:nikhilos_ci_pw@localhost:5432/nikhilos_test
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+
+      - name: Format check
+        run: cargo fmt --all -- --check
+
+      - name: Clippy (warnings as errors)
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Tests (real Postgres service container)
+        run: cargo test
+
+      - name: Docker image builds (offline sqlx, musl static)
+        run: docker build -t nikhil-os-backend:ci .
